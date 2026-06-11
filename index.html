@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>摄影作品 APP · 全部 UX 设计汇总</title>
+<style>
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+:root{--font:-apple-system,BlinkMacSystemFont,"SF Pro Display","PingFang SC","苹方-简","HarmonyOS Sans SC","Microsoft YaHei",sans-serif}
+body{margin:0;background:#07080b;color:#f7f7f8;font-family:var(--font);-webkit-font-smoothing:antialiased}
+.page{max-width:1540px;margin:auto;padding:46px 36px 90px}
+.hero{display:flex;justify-content:space-between;align-items:flex-end;gap:30px;margin-bottom:28px}
+.eyebrow{font-size:10px;font-weight:650;letter-spacing:.18em;text-transform:uppercase;color:#aebdd0}
+h1{margin:9px 0 9px;font-size:clamp(36px,4.5vw,66px);font-weight:680;line-height:1;letter-spacing:-.058em}
+.hero p{max-width:790px;margin:0;color:#9da6b3;font-size:14px;line-height:1.75}
+.count{flex:none;padding:11px 16px;border:1px solid rgba(255,255,255,.14);border-radius:999px;background:rgba(255,255,255,.06);backdrop-filter:blur(20px);font-size:11px;color:#d8e0ea}
+.toc{position:sticky;z-index:20;top:10px;display:flex;gap:7px;overflow:auto;padding:8px;margin:0 -8px 30px;border:1px solid rgba(255,255,255,.09);border-radius:18px;background:rgba(12,14,19,.76);backdrop-filter:blur(26px) saturate(1.35)}
+.toc a{white-space:nowrap;text-decoration:none;color:#b6bec9;padding:9px 12px;border-radius:11px;font-size:10px}.toc a:hover{color:#fff;background:rgba(255,255,255,.09)}
+.group-head{display:flex;justify-content:space-between;align-items:end;margin:48px 0 17px;padding-top:24px;border-top:1px solid rgba(255,255,255,.1)}
+.group-head h2{margin:0;font-size:28px;letter-spacing:-.035em}.group-head p{margin:0;color:#7f8996;font-size:11px}
+.concept{--accent:#a9b8a1;--accentInk:#10150f;--surface:#111411;--panel:rgba(255,255,255,.07);--panel2:rgba(255,255,255,.12);--stroke:rgba(255,255,255,.14);--ink:#f4f4ef;--sub:#a8ada5;position:relative;margin-bottom:18px;padding:26px;border:1px solid rgba(255,255,255,.1);border-radius:30px;background:var(--surface);overflow:hidden;cursor:pointer;transition:.22s}
+.concept:before,.concept:after{content:"";position:absolute;width:360px;height:360px;border-radius:50%;filter:blur(100px);opacity:.16;pointer-events:none}.concept:before{right:-120px;top:-200px;background:var(--accent)}.concept:after{left:-150px;bottom:-240px;background:var(--glow,var(--accent))}
+.concept:hover{transform:translateY(-2px);border-color:var(--accent)}.concept.selected{box-shadow:0 0 0 2px var(--accent)}
+.concept-head{position:relative;z-index:2;display:flex;justify-content:space-between;gap:24px;margin-bottom:22px}
+.num{display:grid;place-items:center;width:31px;height:31px;margin-bottom:12px;border-radius:50%;background:var(--accent);color:var(--accentInk);font-size:11px;font-weight:780}
+.concept h3{margin:0 0 7px;color:var(--ink);font-size:28px;line-height:1.05;letter-spacing:-.04em;font-weight:650}
+.concept-head p{max-width:720px;margin:0;color:var(--sub);font-size:11px;line-height:1.68}
+.tags{display:flex;align-items:flex-start;justify-content:flex-end;gap:6px;flex-wrap:wrap}.tag{padding:7px 9px;border:1px solid var(--stroke);border-radius:999px;color:var(--sub);background:var(--panel);backdrop-filter:blur(18px);font-size:8px}
+.devices{position:relative;z-index:2;display:grid;grid-template-columns:330px minmax(700px,1fr);gap:29px;align-items:center}
+.device{position:relative;overflow:hidden;color:var(--ink);background:var(--device,#101310);border:5px solid var(--frame,rgba(220,228,238,.18));box-shadow:0 28px 75px rgba(0,0,0,.4),inset 0 0 0 1px rgba(255,255,255,.04)}
+.phone{width:282px;height:568px;margin:auto;border-radius:40px}.tablet{width:100%;max-width:920px;aspect-ratio:4/3;border-radius:28px}
+.wall{position:absolute;inset:0;background-size:cover;background-position:center;filter:saturate(var(--sat,.8)) brightness(var(--bright,.76))}
+.shade{position:absolute;inset:0;background:var(--shade,linear-gradient(to bottom,rgba(5,8,13,.1),rgba(5,8,13,.74)))}
+.status,.nav,.body{position:relative;z-index:2}.status{height:30px;padding:11px 15px 0;display:flex;justify-content:space-between;font-size:7px;font-weight:680}.nav{height:55px;padding:5px 15px 10px;display:flex;justify-content:space-between;align-items:center}
+.brand{font-size:17px;font-weight:680;letter-spacing:-.04em}.actions{display:flex;gap:7px}.round{width:28px;height:28px;display:grid;place-items:center;border-radius:50%;border:1px solid var(--stroke);background:var(--panel);backdrop-filter:blur(var(--blur,20px)) saturate(1.35);box-shadow:inset 0 1px rgba(255,255,255,.13);font-size:9px}
+.glass{border:1px solid var(--stroke);background:linear-gradient(145deg,var(--panel2),var(--panel));backdrop-filter:blur(var(--blur,22px)) saturate(1.35);box-shadow:inset 0 1px rgba(255,255,255,.13),0 12px 30px rgba(0,0,0,.16)}
+.meta{font-size:6px;font-weight:680;letter-spacing:.14em;text-transform:uppercase;color:var(--sub)}.title{margin:6px 0 0;font-size:25px;line-height:1.07;letter-spacing:-.05em;font-weight:680}
+.bottom{position:absolute;z-index:5;left:14px;right:14px;bottom:12px;height:47px;display:flex;align-items:center;justify-content:space-around;border-radius:22px;color:var(--sub);font-size:7px}.bottom b{color:var(--ink)}
+.tablet .status{padding-inline:26px}.tablet .nav{height:67px;padding:8px 26px 12px}.tablet .brand{font-size:21px}.segments{display:flex;gap:3px;padding:5px;border-radius:999px}.segments span,.segments b{padding:7px 13px;border-radius:999px;font-size:8px;font-weight:540}.segments span{color:var(--sub)}.segments b{color:var(--ink);background:rgba(255,255,255,.13)}
+.gallery{padding:7px;border-radius:20px}.grid{display:grid;gap:6px;height:100%}.mobile-grid{grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr}.tablet-grid{grid-template-columns:repeat(4,1fr);grid-template-rows:1fr 1fr;gap:8px}
+.photo{display:block;width:100%;height:100%;object-fit:cover;min-width:0;min-height:0;border-radius:var(--photoRadius,3px);background:#20252b}
+.phone-copy,.phone-gallery,.editorial-phone,.filters{position:relative;z-index:2}.phone-copy{padding:5px 15px 14px}.phone-gallery{height:350px;margin:0 9px}.tablet-body{height:calc(100% - 97px);padding:8px 26px 24px}.tablet-copy{display:flex;justify-content:space-between;align-items:end;margin-bottom:14px}.tablet-copy .title{font-size:33px}.tablet-copy p{width:290px;margin:0;color:var(--sub);font-size:9px;line-height:1.55}.tablet-gallery{height:410px}
+.editorial-phone{margin:4px 10px;padding:14px;border-radius:22px}.editorial-phone p{margin:8px 0 12px;color:var(--sub);font-size:8px;line-height:1.55}.editorial-phone .mobile-grid{height:300px}.editorial-tablet{height:100%;padding:18px;border-radius:22px;display:grid;grid-template-columns:.64fr 1.36fr;gap:18px}.story{display:flex;flex-direction:column;justify-content:space-between}.story .title{font-size:35px}.story p{color:var(--sub);font-size:9px;line-height:1.68}.editorial-tablet .tablet-grid{grid-template-columns:repeat(3,1fr)}
+.hero-phone{position:absolute;inset:0}.hero-caption{position:absolute;z-index:3;left:14px;right:14px;bottom:69px;padding:16px;border-radius:21px}.hero-caption .title{font-size:28px}.hero-caption p{margin:8px 0 0;color:var(--sub);font-size:8px;line-height:1.55}
+.hero-tablet{height:100%;display:grid;grid-template-columns:1.35fr .65fr;gap:10px}.feature{position:relative;overflow:hidden;border-radius:21px}.feature>img{width:100%;height:100%;object-fit:cover}.feature .hero-caption{bottom:14px}.recommend{padding:8px;border-radius:21px}.recommend .grid{grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr}
+.sidebar-layout{height:100%;display:grid;grid-template-columns:175px 1fr;gap:10px}.sidebar{padding:18px;border-radius:21px;display:flex;flex-direction:column;justify-content:space-between}.sidebar h4{margin:10px 0 15px;font-size:27px;line-height:1.06;letter-spacing:-.045em}.sidebar span{display:block;padding:7px 0;color:var(--sub);font-size:9px}.sidebar b{color:var(--ink)}.sidebar-layout .tablet-gallery{height:100%}
+.filters{display:flex;gap:4px;margin:3px 12px 10px;padding:5px;border-radius:999px}.filters span,.filters b{flex:1;padding:7px 4px;text-align:center;border-radius:999px;font-size:7px}.filters span{color:var(--sub)}.filters b{background:rgba(255,255,255,.14)}
+.specs{position:relative;z-index:2;display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin-top:18px}.spec{padding:12px;border:1px solid rgba(255,255,255,.08);border-radius:14px;background:rgba(255,255,255,.025)}.spec b{display:block;margin-bottom:5px;color:var(--ink);font-size:10px}.spec p{margin:0;color:var(--sub);font-size:9px;line-height:1.5}
+.light .device{box-shadow:0 28px 75px rgba(54,56,53,.22),inset 0 0 0 1px rgba(255,255,255,.22)}
+body.capture-mode{overflow:hidden}
+.capture-mode .page{max-width:none;padding:10px}
+.capture-mode .hero,.capture-mode .toc,.capture-mode .group-head{display:none}
+.capture-mode #catalog{width:121.9512%;zoom:.82}
+.capture-mode .concept{display:none;margin:0;cursor:default;transition:none}
+.capture-mode .concept.capture-target{display:block}
+.capture-mode .concept:hover{transform:none}
+@media(max-width:1080px){.devices{grid-template-columns:1fr}.tablet-wrap{overflow-x:auto;padding-bottom:8px}.tablet{min-width:790px}.specs{grid-template-columns:1fr 1fr}}
+@media(max-width:680px){.page{padding:28px 13px 55px}.hero,.concept-head{align-items:flex-start;flex-direction:column}.tags{justify-content:flex-start}.concept{padding:18px 9px}.concept-head{padding:0 8px}.specs{grid-template-columns:1fr;padding:0 8px}.phone{width:282px}.group-head{align-items:flex-start;flex-direction:column;gap:7px}}
+</style>
+</head>
+<body>
+<main class="page">
+<header class="hero">
+  <div><div class="eyebrow">Photography App UX Design Archive</div><h1>全部设计方案汇总</h1><p>汇总此前讨论的 19 套视觉方向。每套均重新统一为手机与平板双端效果；中文优先使用苹方字体体系，所有照片网格均完整铺满并显示实际图片。</p></div>
+  <div class="count">19 套风格 · 38 个设备效果</div>
+</header>
+<nav class="toc">
+  <a href="#basic">基础视觉 8 套</a><a href="#glass">毛玻璃 6 套</a><a href="#apple">Apple 毛玻璃 5 套</a>
+  <a href="#style-1">深色影廊</a><a href="#style-9">毛玻璃影像馆</a><a href="#style-15">系统画廊</a>
+</nav>
+<div id="catalog"></div>
+</main>
+<script>
+const imgs=[
+"https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=700&q=86",
+"https://images.unsplash.com/photo-1511818966892-d7d671e672a2?auto=format&fit=crop&w=700&q=86",
+"https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=700&q=86",
+"https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=700&q=86",
+"https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=700&q=86",
+"https://images.unsplash.com/photo-1511497584788-876760111969?auto=format&fit=crop&w=700&q=86",
+"https://images.unsplash.com/photo-1473448912268-2022ce9509d8?auto=format&fit=crop&w=700&q=86",
+"https://images.unsplash.com/photo-1428908728789-d2de25dbd4e2?auto=format&fit=crop&w=700&q=86"
+];
+const styles=[
+{g:"basic",n:"深色影廊",d:"深黑背景、无边界作品墙与克制文字，像进入安静的私人展厅。",mode:"grid",accent:"#aeb8a5",accentInk:"#141713",surface:"#0d0e0d",device:"#0e0f0e",ink:"#f1f0eb",sub:"#92978f",panel:"rgba(255,255,255,.07)",panel2:"rgba(255,255,255,.1)",stroke:"rgba(255,255,255,.13)",radius:"2px",brand:"影廊",title:"静默，也有颜色。",tags:["艺术摄影","克制","耐看"]},
+{g:"basic",n:"暖白编辑部",d:"象牙白纸张、杂志排版与温和圆角，适合旅行、人文和纪实故事。",mode:"editorial",light:true,accent:"#98765a",accentInk:"#30251d",surface:"#d9d3c8",device:"#eee9df",ink:"#282722",sub:"#776f64",panel:"rgba(255,255,255,.34)",panel2:"rgba(255,255,255,.52)",stroke:"rgba(255,255,255,.6)",radius:"12px",brand:"光笺",title:"海岸边的安静时刻。",tags:["人文纪实","杂志感","温暖"]},
+{g:"basic",n:"沉浸式电影感",d:"全屏主视觉、章节化叙事和少量浮动信息，第一眼冲击最强。",mode:"hero",accent:"#a1b3cf",accentInk:"#142034",surface:"#0a1020",device:"#09101e",ink:"#f3f5fa",sub:"#a8b3c5",panel:"rgba(18,28,49,.72)",panel2:"rgba(33,46,70,.72)",stroke:"rgba(255,255,255,.17)",radius:"14px",brand:"北境",title:"大地与寂静相遇。",tags:["全屏","章节叙事","电影感"]},
+{g:"basic",n:"黑曜石影廊",d:"更深的黑曜石色与高对比影像，突出艺术摄影的收藏感。",mode:"grid",accent:"#d7d9d2",accentInk:"#191a18",surface:"#090a09",device:"#0b0c0b",ink:"#f5f3ee",sub:"#969890",panel:"rgba(255,255,255,.055)",panel2:"rgba(255,255,255,.09)",stroke:"rgba(255,255,255,.12)",radius:"0px",brand:"黑曜",title:"光线雕刻空间。",tags:["高对比","艺术收藏","极简"]},
+{g:"basic",n:"象牙白编辑部",d:"更轻盈的白色编辑设计，以摄影集的方式组织文字与作品。",mode:"editorial",light:true,accent:"#a6805d",accentInk:"#332519",surface:"#e5dfd4",device:"#f2eee6",ink:"#28251f",sub:"#7d7367",panel:"rgba(255,255,255,.38)",panel2:"rgba(255,255,255,.58)",stroke:"rgba(255,255,255,.64)",radius:"9px",brand:"工坊",title:"沿途，风把时间放慢。",tags:["摄影集","编辑设计","故事"]},
+{g:"basic",n:"银灰现代主义",d:"冷银灰、理性网格与精确间距，呈现建筑事务所般的秩序感。",mode:"grid",light:true,accent:"#879096",accentInk:"#15191c",surface:"#cfd5d8",device:"#e0e4e6",ink:"#1c2023",sub:"#687279",panel:"rgba(255,255,255,.26)",panel2:"rgba(255,255,255,.42)",stroke:"rgba(255,255,255,.48)",radius:"3px",brand:"构成",title:"光，塑造空间。",tags:["建筑摄影","秩序","现代主义"]},
+{g:"basic",n:"深林静谧",d:"墨绿、苔藓灰和柔和圆角，让自然摄影拥有温润而沉静的气质。",mode:"sidebar",accent:"#c1c59a",accentInk:"#202416",surface:"#101914",device:"#132019",ink:"#eff1e9",sub:"#98a59a",panel:"rgba(200,220,201,.08)",panel2:"rgba(218,232,217,.13)",stroke:"rgba(230,240,228,.17)",radius:"14px",brand:"森语",title:"走进有生命的寂静。",tags:["自然摄影","墨绿","温润"]},
+{g:"basic",n:"午夜电影感",d:"深蓝黑与满屏夜色，作品详情具有强烈的影院式观看体验。",mode:"hero",accent:"#96abd0",accentInk:"#111c31",surface:"#080d19",device:"#090f1e",ink:"#f1f4fa",sub:"#93a2bc",panel:"rgba(18,28,50,.7)",panel2:"rgba(34,48,76,.72)",stroke:"rgba(190,210,238,.17)",radius:"12px",brand:"夜曲",title:"群星之下，万物静默。",tags:["夜景","风光","强沉浸"]},
+{g:"glass",n:"毛玻璃影像馆",d:"照片成为环境光源，导航与信息像冰晶薄片悬浮在影像上方。",mode:"grid",glass:true,accent:"#c7dcf3",accentInk:"#152638",surface:"#0b111b",device:"#101824",ink:"#f5f7fa",sub:"#aeb9c8",panel:"rgba(215,225,237,.10)",panel2:"rgba(226,236,248,.16)",stroke:"rgba(255,255,255,.2)",radius:"14px",brand:"棱光",title:"光，成为记忆。",tags:["动态取色","冰晶","平衡"]},
+{g:"glass",n:"极光冰晶",d:"冷蓝与紫色环境光随作品主色变化，沉浸感和科技感最均衡。",mode:"grid",glass:true,accent:"#c9ddf7",accentInk:"#15243a",surface:"#0c111b",device:"#101723",ink:"#f4f7fb",sub:"#b0bdcc",panel:"rgba(205,221,241,.10)",panel2:"rgba(226,236,250,.17)",stroke:"rgba(255,255,255,.2)",radius:"14px",brand:"极光",title:"光在夜色中呼吸。",tags:["冷蓝紫","科技感","动态光"]},
+{g:"glass",n:"烟熏黑曜石",d:"近黑半透明玻璃与低饱和照片，界面极少，艺术感最强。",mode:"hero",glass:true,accent:"#d9dfe6",accentInk:"#16191e",surface:"#080a0d",device:"#0c0e12",ink:"#f2f3f4",sub:"#a4abb3",panel:"rgba(207,216,226,.07)",panel2:"rgba(225,232,240,.12)",stroke:"rgba(255,255,255,.15)",radius:"16px",brand:"烟墨",title:"山脉醒来之前。",tags:["烟熏玻璃","单色","艺术"]},
+{g:"glass",n:"珍珠柔雾",d:"暖白半透明玻璃、柔和阴影与纸张质感，适合带文字的摄影故事。",mode:"editorial",glass:true,light:true,accent:"#ba9a7c",accentInk:"#38291d",surface:"#cfc8bd",device:"#e8e3da",ink:"#292824",sub:"#6f6b64",panel:"rgba(255,252,246,.28)",panel2:"rgba(255,254,250,.47)",stroke:"rgba(255,255,255,.56)",radius:"13px",brand:"柔雾",title:"一段缓慢的海岸时光。",tags:["暖白玻璃","叙事","柔和"]},
+{g:"glass",n:"森林晶体",d:"深墨绿玻璃强调地点、季节与系列筛选，适合大型自然作品库。",mode:"sidebar",glass:true,accent:"#c0c69c",accentInk:"#202417",surface:"#0d1712",device:"#112019",ink:"#eff2ea",sub:"#9cad9f",panel:"rgba(200,219,199,.09)",panel2:"rgba(218,232,216,.15)",stroke:"rgba(228,240,226,.19)",radius:"15px",brand:"苔晶",title:"会呼吸的风景。",tags:["自然分类","侧边栏","晶体"]},
+{g:"glass",n:"棱镜幻彩",d:"彩色折射光与透明浮层，主视觉结合推荐作品，品牌辨识度最高。",mode:"hero",glass:true,accent:"#f0d3fb",accentInk:"#30193a",surface:"#100b18",device:"#121020",ink:"#faf6fc",sub:"#c1b4ca",panel:"rgba(234,221,246,.10)",panel2:"rgba(246,232,255,.18)",stroke:"rgba(255,255,255,.2)",radius:"15px",brand:"幻彩",title:"静谧的光谱。",tags:["折射光","精选","品牌感"]},
+{g:"apple",n:"系统画廊",d:"接近 iOS 系统相册的清晰与克制，大标题、标签栏与完整照片流。",mode:"grid",glass:true,accent:"#9fc7ff",accentInk:"#0e294b",surface:"#0c121d",device:"#101824",ink:"#f5f8fb",sub:"#acb9c8",panel:"rgba(218,231,248,.11)",panel2:"rgba(232,241,252,.18)",stroke:"rgba(255,255,255,.2)",radius:"14px",brand:"照片",title:"光，成为记忆。",tags:["iOS","大标题","通用"]},
+{g:"apple",n:"空间影像",d:"借鉴 visionOS 深度层次，照片位于底层，故事与控制浮在空间中。",mode:"hero",glass:true,accent:"#d7e8ff",accentInk:"#162a42",surface:"#0a1119",device:"#0e1721",ink:"#f5f8fc",sub:"#b3c0ce",panel:"rgba(216,230,247,.10)",panel2:"rgba(232,242,253,.17)",stroke:"rgba(255,255,255,.2)",radius:"18px",brand:"空间影像",title:"晨雾之上。",tags:["visionOS","空间层次","详情"]},
+{g:"apple",n:"珍珠相簿",d:"Apple 产品页般的暖白材质与编辑排版，适合人像和生活方式摄影。",mode:"editorial",glass:true,light:true,accent:"#d7b797",accentInk:"#39291d",surface:"#d5cfc4",device:"#ebe7df",ink:"#292925",sub:"#66665f",panel:"rgba(255,251,245,.30)",panel2:"rgba(255,254,250,.50)",stroke:"rgba(255,255,255,.58)",radius:"13px",brand:"相簿",title:"海岸边的安静时刻。",tags:["Apple 编辑","暖白","生活方式"]},
+{g:"apple",n:"液态湖光",d:"更柔和的玻璃边缘与青蓝折射感，强调筛选效率和高密度浏览。",mode:"sidebar",glass:true,accent:"#abdcff",accentInk:"#113149",surface:"#08151c",device:"#0d1c24",ink:"#f3f9fb",sub:"#acc2ce",panel:"rgba(199,229,244,.11)",panel2:"rgba(222,241,250,.19)",stroke:"rgba(255,255,255,.2)",radius:"15px",brand:"湖光",title:"自然作品库。",tags:["液态材质","筛选","高密度"]},
+{g:"apple",n:"视觉空间",d:"融合 Apple TV 与 visionOS 的精选体验，主视觉与推荐内容并列。",mode:"hero",glass:true,accent:"#f0d2ff",accentInk:"#321841",surface:"#0d0b14",device:"#11101a",ink:"#faf6fc",sub:"#c0b5c8",panel:"rgba(232,217,246,.11)",panel2:"rgba(246,232,255,.19)",stroke:"rgba(255,255,255,.21)",radius:"15px",brand:"视觉空间",title:"静谧的光谱。",tags:["Apple TV","精选","高端品牌"]}
+];
+const groupInfo={basic:["basic","基础视觉","8 套非毛玻璃视觉方向"],glass:["glass","毛玻璃体系","1 套原型 + 5 套延展方向"],apple:["apple","Apple 毛玻璃体系","5 套 Apple 设计语言方向"]};
+const nav=(s)=>`<div class="status"><span>9:41</span><span>● ● ▰</span></div><div class="nav"><span class="brand">${s.brand}</span><div class="actions"><span class="round">⌕</span><span class="round">···</span></div></div>`;
+const bottom=(s)=>`<div class="${s.glass?"glass ":""}bottom"><b>作品</b><span>系列</span><span>收藏</span><span>我的</span></div>`;
+const fallback="https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=700&q=86";
+const pics=(count,offset=0)=>Array.from({length:count},(_,i)=>`<img class="photo" src="${imgs[(i+offset)%imgs.length]}" onerror="this.onerror=null;this.src='${fallback}'" alt="摄影作品 ${i+1}">`).join("");
+function phone(s,i){
+ const wall=imgs[(i+4)%imgs.length];
+ if(s.mode==="hero")return `<div class="device phone"><div class="wall hero-phone" style="background-image:url('${wall}')"></div><div class="shade"></div>${nav(s)}<div class="${s.glass?"glass ":""}hero-caption"><span class="meta">精选系列 · 2026</span><h4 class="title">${s.title}</h4><p>左右轻扫切换作品，向上轻扫查看故事与拍摄参数。</p></div>${bottom(s)}</div>`;
+ if(s.mode==="editorial")return `<div class="device phone"><div class="wall" style="background-image:url('${wall}')"></div><div class="shade"></div>${nav(s)}<article class="${s.glass?"glass ":""}editorial-phone"><span class="meta">摄影手记 · 第八期</span><h4 class="title">${s.title}</h4><p>以摄影集方式浏览作品与故事。</p><div class="grid mobile-grid">${pics(4,i)}</div></article>${bottom(s)}</div>`;
+ if(s.mode==="sidebar")return `<div class="device phone"><div class="wall" style="background-image:url('${wall}')"></div><div class="shade"></div>${nav(s)}<div class="${s.glass?"glass ":""}filters"><b>全部</b><span>山川</span><span>森林</span><span>湖泊</span></div><div class="${s.glass?"glass ":""}gallery phone-gallery"><div class="grid mobile-grid">${pics(4,i)}</div></div>${bottom(s)}</div>`;
+ return `<div class="device phone"><div class="wall" style="background-image:url('${wall}')"></div><div class="shade"></div>${nav(s)}<div class="phone-copy"><span class="meta">精选作品 · 2026</span><h4 class="title">${s.title}</h4></div><div class="${s.glass?"glass ":""}gallery phone-gallery"><div class="grid mobile-grid">${pics(4,i)}</div></div>${bottom(s)}</div>`;
+}
+function tablet(s,i){
+ const wall=imgs[(i+5)%imgs.length];
+ const top=`<div class="wall" style="background-image:url('${wall}')"></div><div class="shade"></div><div class="status"><span>9:41</span><span>● ● ▰</span></div><div class="nav"><span class="brand">${s.brand}</span><div class="${s.glass?"glass ":""}segments"><b>作品</b><span>系列</span><span>收藏</span><span>关于</span></div><div class="actions"><span class="round">⌕</span><span class="round">···</span></div></div>`;
+ if(s.mode==="hero")return `<div class="device tablet">${top}<div class="body tablet-body"><div class="hero-tablet"><div class="feature"><img src="${imgs[(i+3)%imgs.length]}" onerror="this.onerror=null;this.src='${fallback}'" alt="主视觉作品"><div class="${s.glass?"glass ":""}hero-caption"><span class="meta">本周精选 · 2026</span><h4 class="title">${s.title}</h4></div></div><aside class="${s.glass?"glass ":""}recommend"><div class="grid">${pics(4,i+1)}</div></aside></div></div></div>`;
+ if(s.mode==="editorial")return `<div class="device tablet">${top}<div class="body tablet-body"><div class="${s.glass?"glass ":""}editorial-tablet"><div class="story"><div><span class="meta">摄影手记 · 第八期</span><h4 class="title">${s.title}</h4><p>左侧阅读摄影故事，右侧六张作品完整铺满，形成双页摄影集。</p></div><span class="meta">共 24 张照片</span></div><div class="grid tablet-grid">${pics(6,i)}</div></div></div></div>`;
+ if(s.mode==="sidebar")return `<div class="device tablet">${top}<div class="body tablet-body"><div class="sidebar-layout"><aside class="${s.glass?"glass ":""}sidebar"><div><span class="meta">智能分类</span><h4>${s.title}</h4><span><b>全部作品</b></span><span>山川</span><span>森林</span><span>湖泊</span><span>海岸</span></div><span class="meta">128 张照片</span></aside><div class="${s.glass?"glass ":""}gallery tablet-gallery"><div class="grid tablet-grid">${pics(8,i)}</div></div></div></div></div>`;
+ return `<div class="device tablet">${top}<div class="body tablet-body"><div class="tablet-copy"><div><span class="meta">精选作品 · 2026</span><h4 class="title">${s.title}</h4></div><p>平板以四列网格展示更多作品，顶部导航保持观看区域完整。</p></div><div class="${s.glass?"glass ":""}gallery tablet-gallery"><div class="grid tablet-grid">${pics(8,i)}</div></div></div></div>`;
+}
+function card(s,i){
+ const vars=`--accent:${s.accent};--accentInk:${s.accentInk};--surface:${s.surface};--device:${s.device};--ink:${s.ink};--sub:${s.sub};--panel:${s.panel};--panel2:${s.panel2};--stroke:${s.stroke};--photoRadius:${s.radius};--glow:${s.tags.includes("温暖")||s.light?"#d4ad8c":s.accent}`;
+ return `<section class="concept ${s.light?"light":""}" id="style-${i+1}" data-choice="${s.n}" style="${vars}" onclick="choose(this)"><div class="concept-head"><div><span class="num">${String(i+1).padStart(2,"0")}</span><h3>${s.n}</h3><p>${s.d}</p></div><div class="tags">${s.tags.map(x=>`<span class="tag">${x}</span>`).join("")}</div></div><div class="devices">${phone(s,i)}<div class="tablet-wrap">${tablet(s,i)}</div></div><div class="specs"><div class="spec"><b>手机 UX</b><p>${s.mode==="hero"?"全屏主视觉与浮动信息卡。":s.mode==="sidebar"?"分类筛选与 2×2 满铺网格。":s.mode==="editorial"?"编辑卡片与 2×2 满铺网格。":"大标题与 2×2 满铺网格。"}</p></div><div class="spec"><b>平板 UX</b><p>${s.mode==="hero"?"主视觉与 2×2 推荐图并列。":s.mode==="sidebar"?"侧边分类与 4×2 满铺网格。":s.mode==="editorial"?"故事与 3×2 满铺网格并列。":"顶部导航与 4×2 满铺网格。"}</p></div><div class="spec"><b>中文排版</b><p>苹方优先，标题 650 字重，负字距塑造高级感。</p></div><div class="spec"><b>照片展示</b><p>所有网格使用 object-fit: cover，完整填满容器。</p></div></div></section>`;
+}
+let html="";
+["basic","glass","apple"].forEach(g=>{const info=groupInfo[g];html+=`<div class="group-head" id="${info[0]}"><h2>${info[1]}</h2><p>${info[2]}</p></div>`;styles.forEach((s,i)=>{if(s.g===g)html+=card(s,i)})});
+document.getElementById("catalog").innerHTML=html;
+const captureId=new URLSearchParams(location.search).get("capture")||location.hash.match(/^#capture-(\d+)$/)?.[1];
+if(captureId){
+  const captureTarget=document.getElementById(`style-${captureId}`);
+  document.body.classList.add("capture-mode");
+  if(captureTarget)captureTarget.classList.add("capture-target");
+}else{
+  requestAnimationFrame(()=>{const target=document.getElementById(location.hash.slice(1));if(target)target.scrollIntoView()});
+}
+function choose(el){document.querySelectorAll(".concept").forEach(x=>x.classList.remove("selected"));el.classList.add("selected");fetch("/event",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({type:"click",choice:el.dataset.choice,text:el.dataset.choice,timestamp:Date.now()})}).catch(()=>{})}
+</script>
+</body>
+</html>
