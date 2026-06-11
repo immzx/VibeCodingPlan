@@ -8,8 +8,8 @@
 - 每套方案均包含手机与平板效果
 - 照片宫格采用铺满式展示
 
-入口文件：`index.html`
+## 浏览方式
 
-> Gitee Pages 已下线，因此仓库用于保存和分享设计源文件。下载仓库后直接打开 `index.html` 即可浏览。
-# VibeCodingPlan
-XiaoMengTongXue's Vibe Coding Plan
+下载仓库后，直接打开 `index.html` 即可浏览全部设计方案。
+
+项目目前处于首页 UX 设计阶段，后续将继续通过 Vibe Coding 完成功能设计与开发。
